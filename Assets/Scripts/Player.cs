@@ -35,6 +35,8 @@ public class Player : MonoBehaviour
     private GameObject _leftEngineVisualizer;
     [SerializeField]
     private GameObject _rightEngineVisualizer;
+    [SerializeField]
+    private GameObject _thrusterVisualizer;
 
     private UIManager _uiManager;
 
@@ -68,7 +70,16 @@ public class Player : MonoBehaviour
         {
             FireLaser();
         }
-            
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            _speed = 10f;
+            _thrusterVisualizer.SetActive(true);
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            _speed = 5f;
+            _thrusterVisualizer.SetActive(false);
+        }
        
     }
     void CalculateMovement()

@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     private float _canFire = -1f;
     [SerializeField]
     private int _lives = 3;
+    private int _shieldHealth = 3;
     private SpawnManager _spawnManager;
 
     [SerializeField]
@@ -30,7 +31,14 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _shieldVisualizer;
     [SerializeField]
+    private GameObject _shieldDamagePurple;
+    [SerializeField]
+    private GameObject _shieldDamageRed;
+    [SerializeField]
     private int _score;
+
+    [SerializeField]
+    private int _ammoCount = 20;
     [SerializeField]
     private GameObject _leftEngineVisualizer;
     [SerializeField]
@@ -117,25 +125,50 @@ public class Player : MonoBehaviour
     void FireLaser()
     {
         Vector3 offset = new Vector3(0, 1.0f, 0);
-
+        if (_ammoCount > 0)
+        {
             _canFire = Time.time + _fireRate;
             if (_isTripleShotActive == true)
-        {
-            Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
-        }
+            {
+                Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+            }
             else
-                {
-            Instantiate(_laserPrefab, transform.position + offset, Quaternion.identity);
+            {
+                Instantiate(_laserPrefab, transform.position + offset, Quaternion.identity);
+            }
+            _laserSound.Play();
+            _ammoCount--;
         }
-        _laserSound.Play();
+        else if (_ammoCount == 0)
+        {
+            Debug.Log("out of ammo");
+        }
            
     }
     public void Damage()
     {
         if(_isShieldActive == true)
         {
-            _isShieldActive = false;
-            _shieldVisualizer.SetActive(false);
+            _shieldHealth--;
+            if (_shieldHealth == 2)
+            {
+                _shieldDamageRed.SetActive(false);
+                _shieldDamagePurple.SetActive(true);
+                _shieldVisualizer.SetActive(false);
+            }
+            else if (_shieldHealth == 1)
+            {
+                _shieldVisualizer.SetActive(false);
+                _shieldDamagePurple.SetActive(false);
+                _shieldDamageRed.SetActive(true);
+            }
+            else if (_shieldHealth == 0)
+            {
+                _shieldDamageRed.SetActive(false);
+                _shieldDamagePurple.SetActive(false);
+                _isShieldActive = false;
+                _shieldVisualizer.SetActive(false);
+            }
         }
         else
         {
@@ -186,14 +219,22 @@ public class Player : MonoBehaviour
     {
         if (_isShieldActive == false)
         {
+            _shieldHealth = 3;
             _powerUpSound.Play();
             _isShieldActive = true;
             _shieldVisualizer.SetActive(true);
+            _shieldDamagePurple.SetActive(false);
+            _shieldDamageRed.SetActive(false);
         }
     }
     public void AddScore(int points)
     {
         _score += points;
         _uiManager.UpdateScore(_score);
+    }
+    public void AddAmmo(int addAmmo)
+    {
+        _ammoCount += addAmmo;
+        _uiManager.UpdateAmmoCount(_ammoCount);
     }
 }

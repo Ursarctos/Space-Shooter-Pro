@@ -1064,7 +1064,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1273846479
 Transform:
   m_ObjectHideFlags: 0
@@ -1692,6 +1692,7 @@ MonoBehaviour:
   _score: 0
   _leftEngineVisualizer: {fileID: 1475264051}
   _rightEngineVisualizer: {fileID: 1647812396}
+  _thrusterVisualizer: {fileID: 1273846478}
   _laserSound: {fileID: 1033318785}
   _powerUpSound: {fileID: 2119348633}
 --- !u!212 &1796909996

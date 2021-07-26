@@ -137,7 +137,7 @@ public class Player : MonoBehaviour
                 Instantiate(_laserPrefab, transform.position + offset, Quaternion.identity);
             }
             _laserSound.Play();
-            _ammoCount--;
+            UseAmmo(1);
         }
         else if (_ammoCount == 0)
         {
@@ -232,9 +232,9 @@ public class Player : MonoBehaviour
         _score += points;
         _uiManager.UpdateScore(_score);
     }
-    public void AddAmmo(int addAmmo)
+    public void UseAmmo(int AmmoSpent)
     {
-        _ammoCount += addAmmo;
+        _ammoCount -= AmmoSpent;
         _uiManager.UpdateAmmoCount(_ammoCount);
     }
 }

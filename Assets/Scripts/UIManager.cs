@@ -9,6 +9,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _scoreText;
     [SerializeField]
+    private Text _ammoCountText;
+    [SerializeField]
     private Sprite[] _liveSprites;
     [SerializeField]
     private Image _livesImg;
@@ -33,6 +35,10 @@ public class UIManager : MonoBehaviour
     public void UpdateScore(int playerScore)
     {
         _scoreText.text = "Score: " + playerScore.ToString();
+    }
+    public void UpdateAmmoCount(int playerAmmoCount)
+    {
+        _ammoCountText.text = "Ammo " + playerAmmoCount.ToString();
     }
 
     // Update is called once per frame
